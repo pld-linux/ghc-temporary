@@ -17,28 +17,31 @@ URL:		http://hackage.haskell.org/package/temporary
 BuildRequires:	ghc >= 6.12.3
 BuildRequires:	ghc-base >= 3
 BuildRequires:	ghc-directory >= 1.0
-BuildRequires:	ghc-filepath >= 1.1
-BuildRequires:	ghc-transformers >= 0.2.0.0
 BuildRequires:	ghc-exceptions >= 0.6
+BuildRequires:	ghc-filepath >= 1.1
 BuildRequires:	ghc-random >= 1.1
+BuildRequires:	ghc-transformers >= 0.2.0.0
+BuildRequires:	ghc-unix >= 2.3
 %if %{with prof}
 BuildRequires:	ghc-prof >= 6.12.3
 BuildRequires:	ghc-base-prof >= 3
 BuildRequires:	ghc-directory-prof >= 1.0
-BuildRequires:	ghc-filepath-prof >= 1.1
-BuildRequires:	ghc-transformers-prof >= 0.2.0.0
 BuildRequires:	ghc-exceptions-prof >= 0.6
+BuildRequires:	ghc-filepath-prof >= 1.1
 BuildRequires:	ghc-random-prof >= 1.1
+BuildRequires:	ghc-transformers-prof >= 0.2.0.0
+BuildRequires:	ghc-unix-prof >= 2.3
 %endif
 BuildRequires:	rpmbuild(macros) >= 1.608
 Requires(post,postun):	/usr/bin/ghc-pkg
 %requires_eq	ghc
 Requires:	ghc-base >= 3
 Requires:	ghc-directory >= 1.0
-Requires:	ghc-filepath >= 1.1
-Requires:	ghc-transformers >= 0.2.0.0
 Requires:	ghc-exceptions >= 0.6
+Requires:	ghc-filepath >= 1.1
 Requires:	ghc-random >= 1.1
+Requires:	ghc-transformers >= 0.2.0.0
+Requires:	ghc-unix >= 2.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # debuginfo is not useful for ghc
@@ -71,10 +74,11 @@ Requires:	%{name} = %{version}-%{release}
 Requires:	ghc-prof >= 6.12.3
 Requires:	ghc-base-prof >= 3
 Requires:	ghc-directory-prof >= 1.0
-Requires:	ghc-filepath-prof >= 1.1
-Requires:	ghc-transformers-prof >= 0.2.0.0
 Requires:	ghc-exceptions-prof >= 0.6
+Requires:	ghc-filepath-prof >= 1.1
 Requires:	ghc-random-prof >= 1.1
+Requires:	ghc-transformers-prof >= 0.2.0.0
+Requires:	ghc-unix-prof >= 2.3
 
 %description prof
 Profiling %{pkgname} library for GHC. Should be installed when
@@ -107,6 +111,7 @@ runhaskell Setup.lhs configure -v2 \
 	--docdir=%{_docdir}/%{name}-%{version}
 
 runhaskell Setup.lhs build
+
 runhaskell Setup.lhs haddock --executables
 
 %install
@@ -134,10 +139,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc LICENSE
+%doc CHANGELOG.md LICENSE
 %{_libdir}/%{ghcdir}/package.conf.d/%{pkgname}.conf
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}
-%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHStemporary-%{version}-*.so
+%attr(755,root,root) %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHStemporary-%{version}-*.so
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHStemporary-%{version}-*.a
 %exclude %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHStemporary-%{version}-*_p.a
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/System
